@@ -31,6 +31,7 @@ import com.varabyte.kobweb.silk.style.vars.color.FocusOutlineColorVar
 import com.varabyte.kobweb.silk.style.vars.size.FontSizeVars
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.ColorScheme
+import com.varabyte.kobweb.silk.theme.colors.ColorSchemes
 import com.varabyte.kobweb.silk.theme.colors.palette.color
 import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import org.jetbrains.compose.web.attributes.ButtonType
@@ -114,6 +115,41 @@ class ButtonSize(
     }
 }
 
+class ButtonColorScheme(
+    colorScheme: ColorScheme,
+) : CssStyle.Restricted.Base({
+    val isDark = colorMode.isDark
+    val isBrightColor = (if (isDark) colorScheme._200 else colorScheme._500).isBright
+    Modifier
+        .setVariable(
+            ButtonVars.Color, (if (isBrightColor) ColorMode.LIGHT else ColorMode.DARK).toPalette().color
+        )
+        .setVariable(ButtonVars.BackgroundDefaultColor, if (isDark) colorScheme._200 else colorScheme._500)
+        .setVariable(ButtonVars.BackgroundHoverColor, if (isDark) colorScheme._300 else colorScheme._600)
+        .setVariable(ButtonVars.BackgroundPressedColor, if (isDark) colorScheme._400 else colorScheme._700)
+}) {
+    companion object {
+        val Red = ButtonColorScheme(ColorSchemes.Red)
+        val Pink = ButtonColorScheme(ColorSchemes.Pink)
+        val Purple = ButtonColorScheme(ColorSchemes.Purple)
+        val DeepPurple = ButtonColorScheme(ColorSchemes.DeepPurple)
+        val Indigo = ButtonColorScheme(ColorSchemes.Indigo)
+        val Blue = ButtonColorScheme(ColorSchemes.Blue)
+        val LightBlue = ButtonColorScheme(ColorSchemes.LightBlue)
+        val Cyan = ButtonColorScheme(ColorSchemes.Cyan)
+        val Teal = ButtonColorScheme(ColorSchemes.Teal)
+        val Green = ButtonColorScheme(ColorSchemes.Green)
+        val LightGreen = ButtonColorScheme(ColorSchemes.LightGreen)
+        val Lime = ButtonColorScheme(ColorSchemes.Lime)
+        val Yellow = ButtonColorScheme(ColorSchemes.Yellow)
+        val Amber = ButtonColorScheme(ColorSchemes.Amber)
+        val Orange = ButtonColorScheme(ColorSchemes.Orange)
+        val DeepOrange = ButtonColorScheme(ColorSchemes.DeepOrange)
+        val Brown = ButtonColorScheme(ColorSchemes.Brown)
+        val Gray = ButtonColorScheme(ColorSchemes.Gray)
+        val BlueGray = ButtonColorScheme(ColorSchemes.BlueGray)
+    }
+}
 
 /**
  * A button widget.
@@ -126,7 +162,7 @@ fun Button(
     type: ButtonType = ButtonType.Button,
     enabled: Boolean = true,
     size: ButtonSize = ButtonSize.MD,
-    colorScheme: ColorScheme? = null,
+    colorScheme: ButtonColorScheme? = null,
     focusBorderColor: CSSColorValue? = null,
     ref: ElementRefScope<HTMLButtonElement>? = null,
     content: @Composable RowScope.() -> Unit
@@ -135,19 +171,7 @@ fun Button(
         attrs = ButtonStyle.toModifier(variant)
             .thenIf(!enabled, DisabledStyle.toModifier())
             .then(size.toModifier())
-            .thenIf(colorScheme != null) {
-                @Suppress("NAME_SHADOWING") val colorScheme = colorScheme!!
-                val isDark = ColorMode.current.isDark
-                val isBrightColor = (if (isDark) colorScheme._200 else colorScheme._500).isBright
-                Modifier
-                    .setVariable(
-                        ButtonVars.Color, (if (isBrightColor) ColorMode.LIGHT else ColorMode.DARK).toPalette().color
-                    )
-                    .setVariable(ButtonVars.BackgroundDefaultColor, if (isDark) colorScheme._200 else colorScheme._500)
-                    .setVariable(ButtonVars.BackgroundHoverColor, if (isDark) colorScheme._300 else colorScheme._600)
-                    .setVariable(ButtonVars.BackgroundPressedColor, if (isDark) colorScheme._400 else colorScheme._700)
-
-            }
+            .then(colorScheme?.toModifier() ?: Modifier)
             .setVariable(ButtonVars.BackgroundFocusColor, focusBorderColor)
             .then(modifier)
             .thenIf(enabled) {

@@ -10,6 +10,7 @@ import com.varabyte.kobweb.silk.components.disclosure.TabsPanelStyle
 import com.varabyte.kobweb.silk.components.disclosure.TabsStyle
 import com.varabyte.kobweb.silk.components.disclosure.TabsTabRowStyle
 import com.varabyte.kobweb.silk.components.disclosure.TabsTabStyle
+import com.varabyte.kobweb.silk.components.forms.ButtonColorScheme
 import com.varabyte.kobweb.silk.components.forms.ButtonSize
 import com.varabyte.kobweb.silk.components.forms.ButtonStyle
 import com.varabyte.kobweb.silk.components.forms.ButtonVars
@@ -282,6 +283,26 @@ fun initSilkWidgets(ctx: InitSilkContext) {
     mutableTheme.registerStyle("silk-switch-size_sm", SwitchSize.SM)
     mutableTheme.registerStyle("silk-switch-size_md", SwitchSize.MD)
     mutableTheme.registerStyle("silk-switch-size_lg", SwitchSize.LG)
+
+    mutableTheme.registerStyle("silk-button-color-scheme_red", ButtonColorScheme.Red)
+    mutableTheme.registerStyle("silk-button-color-scheme_pink", ButtonColorScheme.Pink)
+    mutableTheme.registerStyle("silk-button-color-scheme_purple", ButtonColorScheme.Purple)
+    mutableTheme.registerStyle("silk-button-color-scheme_deep-purple", ButtonColorScheme.DeepPurple)
+    mutableTheme.registerStyle("silk-button-color-scheme_indigo", ButtonColorScheme.Indigo)
+    mutableTheme.registerStyle("silk-button-color-scheme_blue", ButtonColorScheme.Blue)
+    mutableTheme.registerStyle("silk-button-color-scheme_light-blue", ButtonColorScheme.LightBlue)
+    mutableTheme.registerStyle("silk-button-color-scheme_cyan", ButtonColorScheme.Cyan)
+    mutableTheme.registerStyle("silk-button-color-scheme_teal", ButtonColorScheme.Teal)
+    mutableTheme.registerStyle("silk-button-color-scheme_green", ButtonColorScheme.Green)
+    mutableTheme.registerStyle("silk-button-color-scheme_light-green", ButtonColorScheme.LightGreen)
+    mutableTheme.registerStyle("silk-button-color-scheme_lime", ButtonColorScheme.Lime)
+    mutableTheme.registerStyle("silk-button-color-scheme_yellow", ButtonColorScheme.Yellow)
+    mutableTheme.registerStyle("silk-button-color-scheme_amber", ButtonColorScheme.Amber)
+    mutableTheme.registerStyle("silk-button-color-scheme_orange", ButtonColorScheme.Orange)
+    mutableTheme.registerStyle("silk-button-color-scheme_deep-orange", ButtonColorScheme.DeepOrange)
+    mutableTheme.registerStyle("silk-button-color-scheme_brown", ButtonColorScheme.Brown)
+    mutableTheme.registerStyle("silk-button-color-scheme_gray", ButtonColorScheme.Gray)
+    mutableTheme.registerStyle("silk-button-color-scheme_blue-gray", ButtonColorScheme.BlueGray)
 }
 
 val SilkColorsStyle = CssStyle.base {

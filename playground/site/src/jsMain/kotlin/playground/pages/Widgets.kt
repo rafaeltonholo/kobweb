@@ -18,6 +18,7 @@ import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.core.Page
 import com.varabyte.kobweb.silk.components.disclosure.Tabs
 import com.varabyte.kobweb.silk.components.forms.Button
+import com.varabyte.kobweb.silk.components.forms.ButtonColorScheme
 import com.varabyte.kobweb.silk.components.forms.ButtonSize
 import com.varabyte.kobweb.silk.components.forms.Checkbox
 import com.varabyte.kobweb.silk.components.forms.CheckboxIconScope
@@ -136,7 +137,7 @@ fun WidgetsPage() {
         ) {
             WidgetSection("Button") {
                 Column(Modifier.gap(0.5.cssRem)) {
-                    listOf(null, ColorSchemes.Red, ColorSchemes.Blue, ColorSchemes.Green).forEach { colorScheme ->
+                    listOf(null, ButtonColorScheme.Red, ButtonColorScheme.Blue, ButtonColorScheme.Green).forEach { colorScheme ->
                         Row(Modifier.gap(1.cssRem), verticalAlignment = Alignment.CenterVertically) {
                             listOf(ButtonSize.XS, ButtonSize.SM, ButtonSize.MD, ButtonSize.LG).forEach { size ->
                                 Button(onClick = {}, size = size, colorScheme = colorScheme) { Text("Button") }
