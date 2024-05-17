@@ -40,11 +40,12 @@ class BoxSizing private constructor(private val value: String) : StylePropertyVa
     }
 }
 
+// See: https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing
 fun StyleScope.boxSizing(boxSizing: BoxSizing) {
     boxSizing(boxSizing.toString())
 }
 
-// See: https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing
+// See: https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow
 fun StyleScope.boxShadow(value: String) {
     property("box-shadow", value)
 }
@@ -57,7 +58,61 @@ fun StyleScope.boxShadow(
     color: CSSColorValue? = null,
     inset: Boolean = false,
 ) {
-    boxShadow(buildString {
+    boxShadow(
+        CSSBoxShadow(
+            offsetX = offsetX,
+            offsetY = offsetY,
+            blurRadius = blurRadius,
+            spreadRadius = spreadRadius,
+            color = color,
+            inset = inset,
+        ),
+    )
+}
+
+fun StyleScope.boxShadow(vararg shadows: CSSBoxShadow) {
+    boxShadow(shadows.toList())
+}
+
+fun StyleScope.boxShadow(shadows: List<CSSBoxShadow>) {
+    boxShadow(value = shadows.joinToString(transform = CSSBoxShadow::toString))
+}
+
+/**
+ * @property offsetX Specifies the **horizontal offset** of the shadow.
+ * A positive value draws a shadow that is offset to the right
+ * of the box, a negative length to the left.
+ * @property offsetY Specifies the **vertical offset** of the shadow.
+ * A positive value offsets the shadow down, a negative one up.
+ * @property blurRadius Specifies the **blur radius**. Negative values are
+ * invalid. If the blur value is zero, the shadow’s edge is sharp.
+ * Otherwise, the larger the value, the more the shadow’s edge is blurred.
+ * See [Shadow Blurring](https://www.w3.org/TR/css-backgrounds-3/#shadow-blur).
+ * @property spreadRadius Specifies the **spread distance**. Positive values
+ * cause the shadow to expand in all directions by the specified radius.
+ * Negative values cause the shadow to contract.
+ * See [Shadow Shape](https://www.w3.org/TR/css-backgrounds-3/#shadow-shape).
+ * @property color Specifies the color of the shadow. If the color is absent,
+ * it defaults to `currentColor` on CSS.
+ * @property inset If `true`, the `inset` keyword is inserted at the end and
+ * changes the drop shadow from an outer box-shadow (one that shadows the box
+ * onto the canvas, as if it were lifted above the canvas) to an inner
+ * box-shadow (one that shadows the canvas onto the box, as if the box were
+ * cut out of the canvas and shifted behind it).
+ */
+data class CSSBoxShadow(
+    val offsetX: CSSLengthNumericValue = 0.px,
+    val offsetY: CSSLengthNumericValue = 0.px,
+    val blurRadius: CSSLengthNumericValue? = null,
+    val spreadRadius: CSSLengthNumericValue? = null,
+    val color: CSSColorValue? = null,
+    val inset: Boolean = false,
+) : CSSStyleValue {
+    companion object {
+        val None = "none".unsafeCast<CSSBoxShadow>()
+    }
+
+    override fun toString(): String = buildString {
         if (inset) {
             append("inset")
             append(' ')
@@ -84,5 +139,5 @@ fun StyleScope.boxShadow(
             append(' ')
             append(color)
         }
-    })
+    }
 }
